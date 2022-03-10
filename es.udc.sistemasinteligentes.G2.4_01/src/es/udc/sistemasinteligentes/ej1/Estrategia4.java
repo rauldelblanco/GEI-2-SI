@@ -10,7 +10,7 @@ public class Estrategia4 implements EstrategiaBusqueda {
     }
 
     @Override
-    public ArrayList<Nodo> soluciona(ProblemaBusqueda p) throws Exception{
+    public Nodo[] soluciona(ProblemaBusqueda p) throws Exception{
         ArrayList<Nodo> explorados = new ArrayList<>();
         Nodo nodoInicial = new Nodo(p.getEstadoInicial(), null, null);
         explorados.add(nodoInicial);
@@ -58,15 +58,17 @@ public class Estrategia4 implements EstrategiaBusqueda {
         return reconstruye_Sol(explorados.get(explorados.size()-1));
     }
 
-    private ArrayList<Nodo> reconstruye_Sol(Nodo n){
+    private Nodo[] reconstruye_Sol(Nodo n){
         ArrayList<Nodo> solucion = new ArrayList<>();
+        int tam=0;
         Nodo a = n;
 
         while (a != null){
             solucion.add(a);
             a = a.getPadre();
+            tam++;
         }
 
-        return solucion;
+        return solucion.toArray(new Nodo[tam]);
     }
 }
