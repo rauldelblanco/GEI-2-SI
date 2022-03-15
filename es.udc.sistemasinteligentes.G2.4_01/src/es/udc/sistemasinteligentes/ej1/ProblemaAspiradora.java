@@ -5,7 +5,6 @@ import es.udc.sistemasinteligentes.Accion;
 import es.udc.sistemasinteligentes.Estado;
 import es.udc.sistemasinteligentes.ProblemaBusqueda;
 
-import java.util.Arrays;
 
 public class ProblemaAspiradora extends ProblemaBusqueda {
     public static class EstadoAspiradora extends Estado {
@@ -102,9 +101,11 @@ public class ProblemaAspiradora extends ProblemaBusqueda {
     public ProblemaAspiradora(EstadoAspiradora estadoInicial) {
         super(estadoInicial);
         //Inicializamos la lista de acciones
-        listaAcciones = new Accion[]{new AccionAspiradora(AccionAspiradora.Tipo.IZQ),
+        listaAcciones = new Accion[]{
+                new AccionAspiradora(AccionAspiradora.Tipo.IZQ),
                 new AccionAspiradora(AccionAspiradora.Tipo.DER),
-                new AccionAspiradora(AccionAspiradora.Tipo.ASP)};
+                new AccionAspiradora(AccionAspiradora.Tipo.ASP)
+        };
     }
 
     public Accion[] acciones(Estado es){
