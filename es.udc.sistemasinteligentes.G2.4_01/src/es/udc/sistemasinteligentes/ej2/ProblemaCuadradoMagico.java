@@ -44,6 +44,10 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
             return result;
         }
     }
+    //-----------Cambie esto para aquí--------------------
+    private static ArrayList<Integer> auxiliar = new ArrayList<>();
+    private int aux = 0;
+    //-----------Cambie esto para aquí--------------------
 
     public static class AccionCuadrado extends Accion{
         private final int valor;
@@ -80,8 +84,12 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
 
             EstadoCuadrado esCua = (EstadoCuadrado) es;
             int[][] matriz = esCua.cuadradoMagico;
-            matriz[i][j] = valor;
+            if (matriz[i][j] == 0 && !auxiliar.contains(valor)) { //Comprobamos que la posición está vacía y que el valor no está.
+                matriz[i][j] = valor;
+                auxiliar.add(matriz[i][j]);
+            }
             return new EstadoCuadrado(matriz);
+
         }
     }
 
@@ -91,8 +99,6 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
     public ProblemaCuadradoMagico(ProblemaCuadradoMagico.EstadoCuadrado estadoInicial) {
         super(estadoInicial);
         int tam = estadoInicial.n;
-        ArrayList<Integer> auxiliar = new ArrayList<>();
-        int aux = 0;
         listaAcciones = new Accion[tam*tam*tam*tam];
 
         for(int fila=0; fila < tam ; fila++){
@@ -101,7 +107,7 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
                 if (estadoInicial.cuadradoMagico[fila][columna] == 0){ //Comprobamos que la posición está vacía
 
                     for(int valor=1;valor <= tam*tam;valor++){
-                        if (!auxiliar.contains(estadoInicial.cuadradoMagico[fila][columna])){ //Comprobamos que el valor no se encuentra en la matriz
+                        if (!auxiliar.contains(valor)){ //Comprobamos que el valor no se encuentra en la matriz
                             listaAcciones[aux] = new AccionCuadrado(valor, fila, columna);
                             aux++;
                         }
