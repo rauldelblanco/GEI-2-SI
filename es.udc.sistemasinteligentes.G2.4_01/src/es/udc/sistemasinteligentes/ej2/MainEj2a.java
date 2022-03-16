@@ -24,7 +24,7 @@ public class MainEj2a {
         EstrategiaBusqueda buscador2 = new EstrategiaBusquedaProfundidad();
         ProblemaBusqueda cuadradoMagico = new ProblemaCuadradoMagico(estadoCuadrado);
 
-        Nodo[] aux2 = buscador2.soluciona(cuadradoMagico);
+        Nodo[] aux2 = buscador1.soluciona(cuadradoMagico);
 
         System.out.println("\nEstados recorridos desde el estado inicial hasta la meta:");
 
@@ -34,6 +34,18 @@ public class MainEj2a {
 
         System.out.println("\nMETA:");
         System.out.println(aux2[0].getEstado());
+        System.out.println(" ");
+
+        Nodo[] aux3 = buscador2.soluciona(cuadradoMagico);
+
+        System.out.println("\nEstados recorridos desde el estado inicial hasta la meta:");
+
+        for (int i = aux3.length - 1; i >= 0; i--){
+            System.out.println(aux3[i].getEstado());
+        }
+
+        System.out.println("\nMETA:");
+        System.out.println(aux3[0].getEstado());
 
     }
 

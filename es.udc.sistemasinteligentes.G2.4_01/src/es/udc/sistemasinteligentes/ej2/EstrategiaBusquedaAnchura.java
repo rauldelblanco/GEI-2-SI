@@ -13,9 +13,13 @@ import java.util.Queue;
 public class EstrategiaBusquedaAnchura implements EstrategiaBusqueda {
 
     private int i;
+    private int nodosCreados;
+    private int nodosExpandidos;
 
     public EstrategiaBusquedaAnchura(){
         i = 1;
+        nodosCreados = 0;
+        nodosExpandidos = 0;
     }
 
     private Nodo[] reconstruye_Sol(Nodo n){
@@ -37,8 +41,13 @@ public class EstrategiaBusquedaAnchura implements EstrategiaBusqueda {
 
         Accion[] accionesDisponibles = p.acciones(nodo.getEstado());
         for (Accion acc : accionesDisponibles) {
-            Estado sc = p.result(nodo.getEstado(), acc);
-            sucesores.add(new Nodo(sc, nodo, acc));
+            if(acc != null){
+                Estado sc = p.result(nodo.getEstado(), acc);
+                if(sc != null){
+                    sucesores.add(new Nodo(sc, nodo, acc));
+                    nodosCreados++;
+                }
+            }
         }
 
         return sucesores;
@@ -53,6 +62,7 @@ public class EstrategiaBusquedaAnchura implements EstrategiaBusqueda {
         boolean aux2               = true;
         ArrayList<Nodo> H;
         frontera.add(new Nodo(p.getEstadoInicial(), null, null));
+        nodosCreados++;
 
         Nodo nodoActual     = frontera.element();
         Estado estadoActual = nodoActual.getEstado();
@@ -71,15 +81,21 @@ public class EstrategiaBusquedaAnchura implements EstrategiaBusqueda {
 
             explorados.add(nodoActual);
             H = sucesores(p, nodoActual);
+            nodosExpandidos++;
 
             for (Nodo n : H){
+
+                System.out.println((i++) + " - RESULT(" + estadoActual + "," + n.getAccion() + ")=" + n.getEstado());
+
                 if (p.esMeta(n.getEstado())){
+                    System.out.println((i++) + " - FIN - " + n.getEstado());
+                    System.out.println("");
+                    System.out.println("Numero de nodos expandidos: " + nodosExpandidos);
+                    System.out.println("Numero de nodos creados: " + nodosCreados);
                     explorados.add(n);
                     return reconstruye_Sol(explorados.get(explorados.size()-1));
                 }
 
-                System.out.println((i++) + " - RESULT(" + estadoActual + "," + n.getAccion() + ")=" + n.getEstado());
-                System.out.println((i++) + " - " + n.getEstado() + " no es meta");
                 for (Nodo n1 : frontera){
                     if (n.getEstado().equals(n1.getEstado())) {
                         aux1 = false;
@@ -95,10 +111,10 @@ public class EstrategiaBusquedaAnchura implements EstrategiaBusqueda {
                 }
 
                 if (aux1 && aux2){
-                    System.out.println((i++) + " - " + p.result(n.getEstado(), n.getAccion()) + " NO explorado");
+                    System.out.println((i++) + " - " + p.result(n.getPadre().getEstado(), n.getAccion()) + " NO explorado");
                     frontera.add(n);
                 } else {
-                    System.out.println((i++) + " - " + p.result(n.getEstado(), n.getAccion()) + " ya explorado");
+                    System.out.println((i++) + " - " + p.result(n.getPadre().getEstado(), n.getAccion()) + " ya explorado");
                 }
 
                 aux1 = true;
@@ -106,6 +122,9 @@ public class EstrategiaBusquedaAnchura implements EstrategiaBusqueda {
             }
             if (!frontera.isEmpty()){
                 System.out.println((i++) + " - Estado actual cambiado a " + frontera.peek().getEstado());
+                if (!p.esMeta(frontera.peek().getEstado())){
+                    System.out.println((i++) + " - " + frontera.peek().getEstado() + " no es meta");
+                }
             }
         }
 

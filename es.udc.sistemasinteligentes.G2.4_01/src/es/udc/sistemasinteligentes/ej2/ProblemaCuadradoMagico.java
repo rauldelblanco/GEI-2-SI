@@ -3,14 +3,11 @@ package es.udc.sistemasinteligentes.ej2;
 import es.udc.sistemasinteligentes.Accion;
 import es.udc.sistemasinteligentes.Estado;
 import es.udc.sistemasinteligentes.ProblemaBusqueda;
-import es.udc.sistemasinteligentes.ej1.ProblemaAspiradora;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ProblemaCuadradoMagico extends ProblemaBusqueda {
-
 
     public static class EstadoCuadrado extends Estado {
 
@@ -44,10 +41,6 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
             return result;
         }
     }
-    //-----------Cambie esto para aquí--------------------
-    private static ArrayList<Integer> auxiliar = new ArrayList<>();
-    private int aux = 0;
-    //-----------Cambie esto para aquí--------------------
 
     public static class AccionCuadrado extends Accion{
         private final int valor;
@@ -82,13 +75,27 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
         @Override
         public Estado aplicaA(Estado es) { //Le pasamos una matriz[N][N]
 
-            EstadoCuadrado esCua = (EstadoCuadrado) es;
-            int[][] matriz = esCua.cuadradoMagico;
-            if (matriz[i][j] == 0 && !auxiliar.contains(valor)) { //Comprobamos que la posición está vacía y que el valor no está.
-                matriz[i][j] = valor;
-                auxiliar.add(matriz[i][j]);
+            EstadoCuadrado esCua  = (EstadoCuadrado) es;
+            int[][] estadoInicial = esCua.cuadradoMagico;
+            int[][] estadoFinal   = new int[esCua.n][esCua.n];
+            ArrayList<Integer> auxiliar = new ArrayList<>();
+
+
+            for (int x = 0; x < esCua.n; x++){
+                for (int y = 0; y < esCua.n; y++){
+                    estadoFinal[x][y] = estadoInicial[x][y];
+                    if (!auxiliar.contains(estadoInicial[x][y])){
+                        auxiliar.add(estadoInicial[x][y]);
+                    }
+                }
             }
-            return new EstadoCuadrado(matriz);
+            estadoFinal[i][j] = valor;
+
+            if (auxiliar.contains(valor)){
+                return null;
+            }else {
+                return (new EstadoCuadrado(estadoFinal));
+            }
 
         }
     }
@@ -99,24 +106,32 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
     public ProblemaCuadradoMagico(ProblemaCuadradoMagico.EstadoCuadrado estadoInicial) {
         super(estadoInicial);
         int tam = estadoInicial.n;
+        ArrayList<Integer> auxiliar = new ArrayList<>();
+        int aux = 0;
         listaAcciones = new Accion[tam*tam*tam*tam];
 
         for(int fila=0; fila < tam ; fila++){
             for(int columna=0;columna < tam; columna++){
+                if (estadoInicial.cuadradoMagico[fila][columna] != 0){
+                    auxiliar.add(estadoInicial.cuadradoMagico[fila][columna]); //Estoy guardando los valores que se encuentran en el estado inicial
+                }
+            }
+        }
+
+        for(int fila=0; fila < tam ; fila++) {
+            for (int columna = 0; columna < tam; columna++) {
 
                 if (estadoInicial.cuadradoMagico[fila][columna] == 0){ //Comprobamos que la posición está vacía
-
                     for(int valor=1;valor <= tam*tam;valor++){
                         if (!auxiliar.contains(valor)){ //Comprobamos que el valor no se encuentra en la matriz
                             listaAcciones[aux] = new AccionCuadrado(valor, fila, columna);
                             aux++;
                         }
                     }
-                } else {
-                    auxiliar.add(estadoInicial.cuadradoMagico[fila][columna]); //Estoy guardando los valores que se encuentran en el estado inicial
                 }
             }
         }
+
     }
 
     public Accion[] acciones(Estado es){

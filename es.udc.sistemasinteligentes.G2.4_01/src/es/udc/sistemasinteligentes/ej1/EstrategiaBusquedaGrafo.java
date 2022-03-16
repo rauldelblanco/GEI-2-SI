@@ -36,8 +36,12 @@ public class EstrategiaBusquedaGrafo implements EstrategiaBusqueda {
 
         Accion[] accionesDisponibles = p.acciones(nodo.getEstado());
         for (Accion acc : accionesDisponibles) {
-            Estado sc = p.result(nodo.getEstado(), acc);
-            sucesores.add(new Nodo(sc, nodo, acc));
+            if(acc != null){
+                Estado sc = p.result(nodo.getEstado(), acc);
+                if(sc != null){
+                    sucesores.add(new Nodo(sc, nodo, acc));
+                }
+            }
         }
 
         return sucesores;
@@ -87,10 +91,10 @@ public class EstrategiaBusquedaGrafo implements EstrategiaBusqueda {
                     }
 
                     if (aux1 && aux2){
-                        System.out.println((i++) + " - " + p.result(n.getEstado(), n.getAccion()) + " NO explorado");
+                        System.out.println((i++) + " - " + p.result(n.getPadre().getEstado(), n.getAccion()) + " NO explorado");
                         frontera.add(n);
                     } else {
-                        System.out.println((i++) + " - " + p.result(n.getEstado(), n.getAccion()) + " ya explorado");
+                        System.out.println((i++) + " - " + p.result(n.getPadre().getEstado(), n.getAccion()) + " ya explorado");
                     }
                     aux1 = true;
                     aux2 = true;
