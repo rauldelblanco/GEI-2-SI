@@ -58,7 +58,7 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
             return "" + valor;
         }
 
-        @Override
+        @Override //Evalua si un estado es aplicable o no.
         public boolean esAplicable(Estado es) {
             EstadoCuadrado estado = (EstadoCuadrado)es;
             int n = estado.n;
@@ -101,7 +101,7 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
     }
 
 
-    private final Accion[] listaAcciones;
+    private final Accion[] listaAcciones; //Acciones posibles a partir de una matriz inicial
 
     public ProblemaCuadradoMagico(ProblemaCuadradoMagico.EstadoCuadrado estadoInicial) {
         super(estadoInicial);
@@ -142,8 +142,9 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
 
     private int sumaTotal(int n) {
         return n*(n*n + 1)/2;
-    }
+    } //Calcula el valor que tienen que sumar las filas, columnas y diagonales.
 
+    //Comprueba si la fila da el valor de sumtotal
     private boolean Fila(Estado es){
         EstadoCuadrado estado = (EstadoCuadrado)es;
         int[][] cuadrado = estado.cuadradoMagico;
@@ -168,6 +169,7 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
         return aux2;
     }
 
+    //Comprueba si la columna da el valor de sumtotal
     private boolean Columna(Estado es){
         EstadoCuadrado estado = (EstadoCuadrado)es;
         int[][] cuadrado = estado.cuadradoMagico;
@@ -193,6 +195,7 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
         return aux2;
     }
 
+    //Comprueba si la diagonal da el valor de sumtotal
     private boolean Diagonal(Estado es){
         EstadoCuadrado estado = (EstadoCuadrado)es;
         int[][] cuadrado = estado.cuadradoMagico;
@@ -225,7 +228,7 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
         return aux2;
     }
 
-    @Override
+    @Override //Simplemente evalua la, fila, columna y diagonal, es meta si solo si todos son ciertos.
     public boolean esMeta(Estado es) {
         return Fila(es) && Columna(es) && Diagonal(es);
     }

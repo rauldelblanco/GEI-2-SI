@@ -30,7 +30,7 @@ public class EstrategiaBusquedaGrafo implements EstrategiaBusqueda {
 
         return solucion.toArray(new Nodo[tam]);
     }
-
+    //Genera y devuelve un Array de Nodos que son los sucesores del nodo pasado por parametro
     private ArrayList<Nodo> sucesores(ProblemaBusqueda p, Nodo nodo) {
         ArrayList<Nodo> sucesores = new ArrayList<>();
 

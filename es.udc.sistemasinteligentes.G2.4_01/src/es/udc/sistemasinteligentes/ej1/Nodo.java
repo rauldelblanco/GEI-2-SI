@@ -4,11 +4,12 @@ import es.udc.sistemasinteligentes.Accion;
 import es.udc.sistemasinteligentes.Estado;
 
 public class Nodo {
-
+    //Atributos
     private Estado estado;
     private Nodo padre;
     private Accion accion;
 
+    //Constructor
     public Nodo(Estado e, Nodo n, Accion a){
         this.estado = e;
         this.padre  = n;

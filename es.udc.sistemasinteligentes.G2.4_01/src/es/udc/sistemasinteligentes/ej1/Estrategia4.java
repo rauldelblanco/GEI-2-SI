@@ -9,6 +9,7 @@ public class Estrategia4 implements EstrategiaBusqueda {
     public Estrategia4() {
     }
 
+
     @Override
     public Nodo[] soluciona(ProblemaBusqueda p) throws Exception{
         ArrayList<Nodo> explorados = new ArrayList<>();
@@ -22,7 +23,7 @@ public class Estrategia4 implements EstrategiaBusqueda {
 
         System.out.println((i++) + " - Empezando búsqueda en " + estadoActual);
 
-        while (!p.esMeta(estadoActual)){
+        while (!p.esMeta(estadoActual)){//Mientras que no encontremos la meta
             nodoActual = explorados.get(explorados.size()-1);
             estadoActual = nodoActual.getEstado();
             System.out.println((i++) + " - " + estadoActual + " no es meta");
@@ -58,6 +59,7 @@ public class Estrategia4 implements EstrategiaBusqueda {
         return reconstruye_Sol(explorados.get(explorados.size()-1));
     }
 
+    //Se encarga de recosntruir la solucion de nodos final.
     private Nodo[] reconstruye_Sol(Nodo n){
         ArrayList<Nodo> solucion = new ArrayList<>();
         int tam=0;

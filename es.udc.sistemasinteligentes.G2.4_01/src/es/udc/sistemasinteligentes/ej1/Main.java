@@ -1,4 +1,4 @@
-package es.udc.sistemasinteligentes.ej1;
+/*package es.udc.sistemasinteligentes.ej1;
 
 import es.udc.sistemasinteligentes.EstrategiaBusqueda;
 import es.udc.sistemasinteligentes.ProblemaBusqueda;
@@ -27,3 +27,4 @@ public class Main {
         System.out.println(aux.get(0).getEstado());
     }
 }
+*/
