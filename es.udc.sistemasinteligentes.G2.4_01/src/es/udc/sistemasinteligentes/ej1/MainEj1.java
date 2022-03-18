@@ -1,9 +1,8 @@
 package es.udc.sistemasinteligentes.ej1;
 
 import es.udc.sistemasinteligentes.EstrategiaBusqueda;
+import es.udc.sistemasinteligentes.Nodo;
 import es.udc.sistemasinteligentes.ProblemaBusqueda;
-
-import java.util.ArrayList;
 
 public class MainEj1 {
 

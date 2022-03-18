@@ -4,7 +4,7 @@ import es.udc.sistemasinteligentes.Accion;
 import es.udc.sistemasinteligentes.Estado;
 import es.udc.sistemasinteligentes.EstrategiaBusqueda;
 import es.udc.sistemasinteligentes.ProblemaBusqueda;
-import es.udc.sistemasinteligentes.ej1.Nodo;
+import es.udc.sistemasinteligentes.Nodo;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 
@@ -110,7 +110,7 @@ public class EstrategiaBusquedaProfundidad implements EstrategiaBusqueda {
             } else {
                 explorados.add(nodoActual);
                 System.out.println((i++) + " - FIN - " + estadoActual);
-                System.out.println("");
+                System.out.println(" ");
                 System.out.println("Numero de nodos expandidos: " + nodosExpandidos);
                 System.out.println("Numero de nodos creados: " + nodosCreados);
                 return reconstruye_Sol(explorados.get(explorados.size()-1));

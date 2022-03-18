@@ -1,9 +1,6 @@
 package es.udc.sistemasinteligentes.ej1;
 
-import es.udc.sistemasinteligentes.Accion;
-import es.udc.sistemasinteligentes.Estado;
-import es.udc.sistemasinteligentes.EstrategiaBusqueda;
-import es.udc.sistemasinteligentes.ProblemaBusqueda;
+import es.udc.sistemasinteligentes.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -30,7 +27,7 @@ public class EstrategiaBusquedaGrafo implements EstrategiaBusqueda {
 
         return solucion.toArray(new Nodo[tam]);
     }
-    //Genera y devuelve un Array de Nodos que son los sucesores del nodo pasado por parametro
+
     private ArrayList<Nodo> sucesores(ProblemaBusqueda p, Nodo nodo) {
         ArrayList<Nodo> sucesores = new ArrayList<>();
 

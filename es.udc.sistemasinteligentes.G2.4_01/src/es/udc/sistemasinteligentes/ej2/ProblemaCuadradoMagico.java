@@ -19,19 +19,28 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
             this.n              = cuadradoMagico.length;
         }
 
+        public int[][] getCuadradoMagico() {
+            return cuadradoMagico;
+        }
+
         @Override
         public String toString() {
             return Arrays.deepToString(cuadradoMagico);
         }
 
         @Override
-        public boolean equals(Object o) {
+        public boolean equals(Object o) {//compara una matriz con otra
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-
             EstadoCuadrado that = (EstadoCuadrado) o;
-
-            return Arrays.deepEquals(cuadradoMagico, that.cuadradoMagico);
+            for (int i = 0; i < cuadradoMagico.length; i++) {
+                for (int j = 0; j < cuadradoMagico[i].length; j++) {
+                    if (cuadradoMagico[i][j] != that.cuadradoMagico[i][j]) {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
         @Override
@@ -58,7 +67,7 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
             return "" + valor;
         }
 
-        @Override //Evalua si un estado es aplicable o no.
+        @Override
         public boolean esAplicable(Estado es) {
             EstadoCuadrado estado = (EstadoCuadrado)es;
             int n = estado.n;
@@ -101,50 +110,51 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
     }
 
 
-    private final Accion[] listaAcciones; //Acciones posibles a partir de una matriz inicial
-
-    public ProblemaCuadradoMagico(ProblemaCuadradoMagico.EstadoCuadrado estadoInicial) {
+    public ProblemaCuadradoMagico(Estado estadoInicial) {
         super(estadoInicial);
-        int tam = estadoInicial.n;
-        ArrayList<Integer> auxiliar = new ArrayList<>();
-        int aux = 0;
-        listaAcciones = new Accion[tam*tam*tam*tam];
-
-        for(int fila=0; fila < tam ; fila++){
-            for(int columna=0;columna < tam; columna++){
-                if (estadoInicial.cuadradoMagico[fila][columna] != 0){
-                    auxiliar.add(estadoInicial.cuadradoMagico[fila][columna]); //Estoy guardando los valores que se encuentran en el estado inicial
-                }
-            }
-        }
-
-        for(int fila=0; fila < tam ; fila++) {
-            for (int columna = 0; columna < tam; columna++) {
-
-                if (estadoInicial.cuadradoMagico[fila][columna] == 0){ //Comprobamos que la posición está vacía
-                    for(int valor=1;valor <= tam*tam;valor++){
-                        if (!auxiliar.contains(valor)){ //Comprobamos que el valor no se encuentra en la matriz
-                            listaAcciones[aux] = new AccionCuadrado(valor, fila, columna);
-                            aux++;
-                        }
-                    }
-                }
-            }
-        }
-
     }
 
     public Accion[] acciones(Estado es){
-        //No es necesario generar las acciones dinámicamente a partir del estado porque todas las acciones se pueden
-        //aplicar a todos los estados
-        return listaAcciones;
+
+        EstadoCuadrado esCua = (EstadoCuadrado) es;
+        ArrayList<AccionCuadrado> acciones = new ArrayList<>();
+        int[][] cuadradoMagico = esCua.cuadradoMagico;
+        int aux1 = -1, aux2 = -1;
+        boolean first = false;
+
+        for(int i = 0; i < cuadradoMagico.length; i++){ //Buscamos la primera casilla vacía
+            for(int j = 0; j < cuadradoMagico[i].length; j++){
+                if(cuadradoMagico[i][j] == 0){
+                    aux1 = i;
+                    aux2 = j;
+                    break;
+                }
+            }
+            if (aux1 != -1){
+                break;
+            }
+        }
+
+        if(aux1 == -1){
+            return new Accion[0];
+        }else{
+            for(int i = 1; i <= (cuadradoMagico.length * cuadradoMagico.length); i++){
+                AccionCuadrado acc = new AccionCuadrado(i, aux1, aux2);
+                if(acc.esAplicable(es)) {
+                    acciones.add(acc);
+                }
+            }
+        }
+
+        Accion[] listaAcciones= new Accion[acciones.size()];
+
+        return acciones.toArray(listaAcciones);
     }
 
     private int sumaTotal(int n) {
         return n*(n*n + 1)/2;
-    } //Calcula el valor que tienen que sumar las filas, columnas y diagonales.
+    }
 
-    //Comprueba si la fila da el valor de sumtotal
     private boolean Fila(Estado es){
         EstadoCuadrado estado = (EstadoCuadrado)es;
         int[][] cuadrado = estado.cuadradoMagico;
@@ -169,7 +179,6 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
         return aux2;
     }
 
-    //Comprueba si la columna da el valor de sumtotal
     private boolean Columna(Estado es){
         EstadoCuadrado estado = (EstadoCuadrado)es;
         int[][] cuadrado = estado.cuadradoMagico;
@@ -195,7 +204,6 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
         return aux2;
     }
 
-    //Comprueba si la diagonal da el valor de sumtotal
     private boolean Diagonal(Estado es){
         EstadoCuadrado estado = (EstadoCuadrado)es;
         int[][] cuadrado = estado.cuadradoMagico;
@@ -228,7 +236,7 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
         return aux2;
     }
 
-    @Override //Simplemente evalua la, fila, columna y diagonal, es meta si solo si todos son ciertos.
+    @Override
     public boolean esMeta(Estado es) {
         return Fila(es) && Columna(es) && Diagonal(es);
     }

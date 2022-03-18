@@ -4,7 +4,7 @@ import es.udc.sistemasinteligentes.Accion;
 import es.udc.sistemasinteligentes.Estado;
 import es.udc.sistemasinteligentes.EstrategiaBusqueda;
 import es.udc.sistemasinteligentes.ProblemaBusqueda;
-import es.udc.sistemasinteligentes.ej1.Nodo;
+import es.udc.sistemasinteligentes.Nodo;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -89,7 +89,7 @@ public class EstrategiaBusquedaAnchura implements EstrategiaBusqueda {
 
                 if (p.esMeta(n.getEstado())){
                     System.out.println((i++) + " - FIN - " + n.getEstado());
-                    System.out.println("");
+                    System.out.println(" ");
                     System.out.println("Numero de nodos expandidos: " + nodosExpandidos);
                     System.out.println("Numero de nodos creados: " + nodosCreados);
                     explorados.add(n);
