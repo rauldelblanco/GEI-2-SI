@@ -7,6 +7,8 @@ import java.util.PriorityQueue;
 
 public class EstrategiaBusquedaA implements EstrategiaBusquedaInformada {
 
+    //Atributos para llevar a cabo un seguimiento de los pasos, de los nodos creados y de los expandidos.
+
     private int i;
     private int nodosCreados;
     private int nodosExpandidos;
@@ -48,6 +50,8 @@ public class EstrategiaBusquedaA implements EstrategiaBusquedaInformada {
         return sucesores;
     }
 
+    //Implementación de la función de búsqueda A* vista en teoría.
+
     public Nodo[] soluciona(ProblemaBusqueda p, Heuristica h) throws Exception{
 
         PriorityQueue<Nodo> frontera = new PriorityQueue<>();
@@ -72,7 +76,7 @@ public class EstrategiaBusquedaA implements EstrategiaBusquedaInformada {
                 H = sucesores(p, nodoActual);
                 nodosExpandidos++;
 
-                for (Nodo n : H){
+                for (Nodo n : H){ //Recorremos la lista de sucesores del nodo actual.
 
                     System.out.println((i++) + " - RESULT(" + estadoActual + "," + n.getAccion() + ")=" + n.getEstado());
                     n.setCoste(nodoActual.getCoste() + 1);
@@ -90,7 +94,6 @@ public class EstrategiaBusquedaA implements EstrategiaBusquedaInformada {
                                     frontera.remove(nf);
                                     frontera.add(n);
                                 }
-
                             }
                         }
 
@@ -108,7 +111,7 @@ public class EstrategiaBusquedaA implements EstrategiaBusquedaInformada {
                 return reconstruye_Sol(nodoActual);
             }
 
-            if (!frontera.isEmpty()){
+            if (!frontera.isEmpty()){ //Comprobamos que la frontera no esté vacía para informar del cambio de estado.
                 System.out.println((i++) + " - Estado actual cambiado a " + frontera.peek().getEstado());
             }
 

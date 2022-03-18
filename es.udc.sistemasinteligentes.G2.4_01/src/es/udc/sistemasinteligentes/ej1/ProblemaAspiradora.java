@@ -94,7 +94,7 @@ public class ProblemaAspiradora extends ProblemaBusqueda {
         }
     }
 
-    //Como toda las acciones se pueden aplicar en cualquier estado y son pocas,
+    //Como todas las acciones se pueden aplicar en cualquier estado y son pocas,
     //podemos mantenerlas en un array para cuando nos las pidan con el método acciones.
     private Accion[] listaAcciones;
 

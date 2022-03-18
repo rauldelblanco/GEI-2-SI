@@ -11,6 +11,8 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
 
     public static class EstadoCuadrado extends Estado {
 
+        //Definimos los atributos de los estados.
+
         private final int[][] cuadradoMagico;
         private final int n;
 
@@ -33,6 +35,10 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             EstadoCuadrado that = (EstadoCuadrado) o;
+
+            //Recorremos el cuadradoMágico y comprobamos que cada casilla del array sea la misma que la que le pasamos a
+            //la función.
+
             for (int i = 0; i < cuadradoMagico.length; i++) {
                 for (int j = 0; j < cuadradoMagico[i].length; j++) {
                     if (cuadradoMagico[i][j] != that.cuadradoMagico[i][j]) {
@@ -52,6 +58,9 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
     }
 
     public static class AccionCuadrado extends Accion{
+
+        //Definimos los atributos de las acciones.
+
         private final int valor;
         private final int i;
         private final int j;
@@ -71,6 +80,9 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
         public boolean esAplicable(Estado es) {
             EstadoCuadrado estado = (EstadoCuadrado)es;
             int n = estado.n;
+
+            //Comprobamos que la lista no contenga el valor que queremos insertar.
+
             for(int f=0; f < n ; f++) {
                 for (int c = 0; c < n; c++) {
                     if (((EstadoCuadrado) es).cuadradoMagico[f][c] == valor) {
@@ -78,6 +90,9 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
                     }
                 }
             }
+
+            //Realizamos las últimas comprobaciones
+
             return valor <= n * n && i < n && j < n && ((EstadoCuadrado) es).cuadradoMagico[i][j] == 0;
         }
 
@@ -89,6 +104,10 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
             int[][] estadoFinal   = new int[esCua.n][esCua.n];
             ArrayList<Integer> auxiliar = new ArrayList<>();
 
+            //Introducimos los valores que contiene la tabla en un array auxiliar.
+            //PROBLEMA.
+            //Necesitamos utilizar un array estadoFinal para que no se modificasen todos los valores de la lista
+            //de acciones cada vez que introducíamos una nueva acción.
 
             for (int x = 0; x < esCua.n; x++){
                 for (int y = 0; y < esCua.n; y++){
@@ -99,6 +118,8 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
                 }
             }
             estadoFinal[i][j] = valor;
+
+            //Comprobamos que el valor que queremos para la acción no se encuentre en el array auxiliar.
 
             if (auxiliar.contains(valor)){
                 return null;
@@ -120,7 +141,6 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
         ArrayList<AccionCuadrado> acciones = new ArrayList<>();
         int[][] cuadradoMagico = esCua.cuadradoMagico;
         int aux1 = -1, aux2 = -1;
-        boolean first = false;
 
         for(int i = 0; i < cuadradoMagico.length; i++){ //Buscamos la primera casilla vacía
             for(int j = 0; j < cuadradoMagico[i].length; j++){
@@ -135,10 +155,10 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
             }
         }
 
-        if(aux1 == -1){
+        if(aux1 == -1){ //En caso de que no haya casillas vacías.
             return new Accion[0];
         }else{
-            for(int i = 1; i <= (cuadradoMagico.length * cuadradoMagico.length); i++){
+            for(int i = 1; i <= (cuadradoMagico.length * cuadradoMagico.length); i++){ //Introducimos todas las acciones posibles para esa casilla.
                 AccionCuadrado acc = new AccionCuadrado(i, aux1, aux2);
                 if(acc.esAplicable(es)) {
                     acciones.add(acc);
@@ -154,6 +174,8 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
     private int sumaTotal(int n) {
         return n*(n*n + 1)/2;
     }
+
+    //Comprobamos que todas las filas sumen n*(n*n + 1)/2
 
     private boolean Fila(Estado es){
         EstadoCuadrado estado = (EstadoCuadrado)es;
@@ -179,6 +201,8 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
         return aux2;
     }
 
+    //Comprobamos que todas las columnas sumen n*(n*n + 1)/2
+
     private boolean Columna(Estado es){
         EstadoCuadrado estado = (EstadoCuadrado)es;
         int[][] cuadrado = estado.cuadradoMagico;
@@ -203,6 +227,8 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda {
         }
         return aux2;
     }
+
+    //Comprobamos que las dos diagonales sumen n*(n*n + 1)/2
 
     private boolean Diagonal(Estado es){
         EstadoCuadrado estado = (EstadoCuadrado)es;

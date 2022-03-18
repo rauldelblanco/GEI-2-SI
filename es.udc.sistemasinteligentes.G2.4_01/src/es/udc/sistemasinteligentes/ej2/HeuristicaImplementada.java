@@ -11,8 +11,6 @@ public class HeuristicaImplementada extends Heuristica {
 
     @Override
     public float evalua(Estado e) {
-        //Para la heurística simplemente comprobamos que la matriz aún puede ser solución. Si puede, entonces devolvemos el número
-        //de casillas que faltan por rellenar. Si no puede, devolvemos un número muy alto.
 
         int [][] cuadradoMagico = ((ProblemaCuadradoMagico.EstadoCuadrado) e).getCuadradoMagico();
         int diag1 = 0,diag2 = 0, fil = 0, col = 0, cont = 0;;
@@ -23,7 +21,7 @@ public class HeuristicaImplementada extends Heuristica {
 
         for(int i = 0; i < cuadradoMagico.length; i++){
             diag1 += cuadradoMagico[i][i];
-            if(cuadradoMagico[i][i]==0){ //Compruebo si existen celdas vacías en la diagonal descendente
+            if(cuadradoMagico[i][i]==0){ //Comprobamos si existen celdas vacías en la diagonal descendente
                 casillas1=true;
             }
         }
@@ -36,10 +34,13 @@ public class HeuristicaImplementada extends Heuristica {
 
             diag2 += cuadradoMagico[aux][i];
 
-            if (cuadradoMagico[aux][i] == 0){ //Compruebo si existen celdas vacías en la diagonal ascendente
+            if (cuadradoMagico[aux][i] == 0){ //Comprobamos si existen celdas vacías en la diagonal ascendente
                 casillas2 = true;
             }
         }
+
+        //En caso de que la suma de alguna de las diagonales no sea la correcta y que las casillas de las diagonales sean
+        //distintas de 0, devolveremos un coste muy elevado.
 
         if((diag1 != sumaTotal(cuadradoMagico.length) && !casillas1) || (diag2 != sumaTotal(cuadradoMagico.length) && !casillas2)){
             return 999;
@@ -48,7 +49,7 @@ public class HeuristicaImplementada extends Heuristica {
         casillas1 = false;
         casillas2 = false;
 
-        //Compruebo que ninguna fila o columna pase de N*(N^2+1)/2 o se quede corta
+        //Comprobamos que ninguna fila o columna pase de N*(N^2+1)/2 o se quede corta
 
         for(int i = 0; i < cuadradoMagico.length; i++){
 
@@ -60,7 +61,7 @@ public class HeuristicaImplementada extends Heuristica {
                 fil += cuadradoMagico[i][j];
 
                 if(cuadradoMagico[i][j] == 0){
-                    cont++;
+                    cont++; //Llevamos un recuento de las casillas vacías.
                     casillas1 = true;
                 }
 
@@ -69,6 +70,9 @@ public class HeuristicaImplementada extends Heuristica {
                     casillas2 = true;
                 }
             }
+
+            //En caso de que la suma de alguna de las filas o columnas no sea la correcta y que las casillas de estas sean
+            //distintas de 0, devolveremos un coste muy elevado.
 
             if((fil != sumaTotal(cuadradoMagico.length) && !casillas1) || (col != sumaTotal(cuadradoMagico.length) && !casillas2)){
                 return 999;

@@ -17,6 +17,8 @@ public class MainEj1 {
 
         Nodo[] aux = buscador.soluciona(aspiradora);
 
+        //Imprimimos los estados que se han recorrido, empezando desde el final del array.
+
         System.out.println("\nEstados recorridos desde el estado inicial hasta la meta:");
 
         for (int i = aux.length - 1; i >= 0; i--){

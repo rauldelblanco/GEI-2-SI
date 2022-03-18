@@ -33,10 +33,10 @@ public class EstrategiaBusquedaGrafo implements EstrategiaBusqueda {
 
         Accion[] accionesDisponibles = p.acciones(nodo.getEstado());
         for (Accion acc : accionesDisponibles) {
-            if(acc != null){
+            if(acc != null){ //Comprobamos que la acción de la lista no sea null
                 Estado sc = p.result(nodo.getEstado(), acc);
-                if(sc != null){
-                    sucesores.add(new Nodo(sc, nodo, acc));
+                if(sc != null){ //Comprobamos que el estado no es null
+                    sucesores.add(new Nodo(sc, nodo, acc)); //Introducimos en la lista de sucesores el nodo necesario.
                 }
             }
         }
@@ -73,21 +73,21 @@ public class EstrategiaBusquedaGrafo implements EstrategiaBusqueda {
 
                     System.out.println((i++) + " - RESULT(" + estadoActual + "," + n.getAccion() + ")=" + n.getEstado());
 
-                    for (Nodo n1 : frontera){
+                    for (Nodo n1 : frontera){ //Comprobamos que algún nodo de sucesores no se encuentre en la frontera.
                         if (n.getEstado().equals(n1.getEstado())) {
                             aux1 = false;
                             break;
                         }
                     }
 
-                    for (Nodo n1 : explorados){
+                    for (Nodo n1 : explorados){ //Comprobamos que algún nodo de sucesores no se encuentre en la lista de explorados.
                         if (n.getEstado().equals(n1.getEstado())){
                             aux2 = false;
                             break;
                         }
                     }
 
-                    if (aux1 && aux2){
+                    if (aux1 && aux2){ //En caso de que no se encuentre en ninguna de las dos listas, lo añadimos a la frontera.
                         System.out.println((i++) + " - " + p.result(n.getPadre().getEstado(), n.getAccion()) + " NO explorado");
                         frontera.add(n);
                     } else {
@@ -96,7 +96,7 @@ public class EstrategiaBusquedaGrafo implements EstrategiaBusqueda {
                     aux1 = true;
                     aux2 = true;
                 }
-                if (!frontera.isEmpty()){
+                if (!frontera.isEmpty()){ //Comprobamos que la frontera no esté vacía para informar del cambio de estado.
                     System.out.println((i++) + " - Estado actual cambiado a " + frontera.peek().getEstado());
                 }
             } else {

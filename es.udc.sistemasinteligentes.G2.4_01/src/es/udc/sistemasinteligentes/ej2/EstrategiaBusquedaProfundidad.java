@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 public class EstrategiaBusquedaProfundidad implements EstrategiaBusqueda {
 
+    //Atributos para llevar a cabo un seguimiento de los pasos, de los nodos creados y de los expandidos.
+
     private int i;
     private int nodosExpandidos;
     private int nodosCreados;
@@ -77,25 +79,25 @@ public class EstrategiaBusquedaProfundidad implements EstrategiaBusqueda {
                 H = sucesores(p, nodoActual);
                 nodosExpandidos++;
 
-                for (Nodo n : H){
+                for (Nodo n : H){ //Recorremos la lista de sucesores del nodo actual.
 
                     System.out.println((i++) + " - RESULT(" + estadoActual + "," + n.getAccion() + ")=" + n.getEstado());
 
-                    for (Nodo n1 : frontera){
+                    for (Nodo n1 : frontera){ //Buscamos si el nodo se encuentra en la frontera.
                         if (n.getEstado().equals(n1.getEstado())) {
                             aux1 = false;
                             break;
                         }
                     }
 
-                    for (Nodo n1 : explorados){
+                    for (Nodo n1 : explorados){ //Buscamos si el nodo se encuentra en la lista de explorados.
                         if (n.getEstado().equals(n1.getEstado())){
                             aux2 = false;
                             break;
                         }
                     }
 
-                    if (aux1 && aux2){
+                    if (aux1 && aux2){ //Si no se encuentra el nodo en ninguna de las dos listas, añadimos el nodo a la frontera.
                         System.out.println((i++) + " - " + p.result(n.getPadre().getEstado(), n.getAccion()) + " NO explorado");
                         frontera.push(n);
                     } else {
@@ -104,7 +106,7 @@ public class EstrategiaBusquedaProfundidad implements EstrategiaBusqueda {
                     aux1 = true;
                     aux2 = true;
                 }
-                if (!frontera.isEmpty()){
+                if (!frontera.isEmpty()){ //Comprobamos si la frontera está vacía para informar del cambio de estado.
                     System.out.println((i++) + " - Estado actual cambiado a " + frontera.peek().getEstado());
                 }
             } else {

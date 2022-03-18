@@ -3,17 +3,19 @@ package es.udc.sistemasinteligentes;
 public class Nodo implements Comparable<Nodo>{
 
     private Estado estado;
-    private Nodo padre;
+    private final Nodo padre;
     private Accion accion;
     private float coste;
     private float f;
 
 
-    public Nodo(Estado e, Nodo n, Accion a){
+    public Nodo(Estado e, Nodo n, Accion a){ //Introducimos el método para crear un Nodo visto en teoría.
         this.estado = e;
         this.padre  = n;
         this.accion = a;
     }
+
+    //Getters y Setters necesarios para el desarrollo del programa.
 
     public Estado getEstado() {
         return estado;
@@ -25,10 +27,6 @@ public class Nodo implements Comparable<Nodo>{
 
     public Nodo getPadre() {
         return padre;
-    }
-
-    public void setPadre(Nodo padre) {
-        this.padre = padre;
     }
 
     public Accion getAccion() {

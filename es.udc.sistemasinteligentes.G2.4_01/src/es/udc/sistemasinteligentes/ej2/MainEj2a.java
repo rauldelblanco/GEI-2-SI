@@ -9,7 +9,7 @@ public class MainEj2a {
 
     public static void main(String[] args) throws Exception{
 
-        int[][] aux = {{4, 9, 2}, {3, 5, 0}, {0, 1, 0}};
+        int[][] aux = {{4, 9, 2}, {3, 5, 0}, {0, 0, 0}};
 
         ProblemaCuadradoMagico.EstadoCuadrado estadoCuadrado = new ProblemaCuadradoMagico.EstadoCuadrado(aux);
         EstrategiaBusqueda buscador1 = new EstrategiaBusquedaAnchura();
