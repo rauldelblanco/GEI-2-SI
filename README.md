@@ -1,2 +1,5 @@
-# Trabajo completamente serio de Sistemas Inteligentes
-Armando Martínez Poya quiere que haga este repositorio
+# Práctica 1: Estrategias de búsqueda
+
+Nota: 
+
+# Práctica 2: 
