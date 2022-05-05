@@ -1,5 +1,5 @@
 # Práctica 1: Estrategias de búsqueda
 
-Nota: 
+Nota: 9.5
 
 # Práctica 2: 
