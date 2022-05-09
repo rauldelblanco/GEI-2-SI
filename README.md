@@ -2,4 +2,3 @@
 
 Nota: 9.5
 
-# Práctica 2: 
